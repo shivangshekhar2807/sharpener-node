@@ -6,6 +6,10 @@ app.listen(8888, () => {
     console.log("server started and listening on port 8888")
 })
 
+app.use((req, res, next) => {
+    console.log("checked")
+    next()
+})
 
 app.use("/test", (req, res) => {
     res.send("<h1>hello world</h1>")
