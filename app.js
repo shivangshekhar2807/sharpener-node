@@ -1,6 +1,7 @@
 
 const express = require("express");
 const app = express();
+const userRouter=require("./routes/user")
 
 app.listen(8888, () => {
     console.log("server started and listening on port 8888")
@@ -14,9 +15,14 @@ const user = [
 app.use(express.json());
 
 app.use((req, res, next) => {
+     const method = req.method;
+     const url = req.url;
+     console.log(method + " " + url);
     console.log("checked")
     next()
 })
+
+app.use("/", userRouter);
 
 app.use("/custom-middleware", (req, res, next) => {
     console.log("custom-middleware")
@@ -43,25 +49,13 @@ app.use("/categories", (req, res) => {
 
 app.get("/users/:id", (req, res) => {
     const { id } = req.params
+   
     const newuser=user.filter((item)=>item.id==id)
   res.json({ user: newuser });
 });
 
 
 
-app.post("/add/users", (req, res) => {
-    console.log(req.body)
-    const { id, name } = req.body
-    
-    const obj = {
-        id: id,
-        name:name
-    }
-
-    user.push(obj);
-
-    res.send("user added")
-})
 
 app.use((req, res) => {
   res.status(404).send("<h1>404 - Page Not Found</h1>");
