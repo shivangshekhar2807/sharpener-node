@@ -1,3 +1,4 @@
+const { getServices } = require("../services/userServices");
 
 
 const user = [
@@ -20,10 +21,10 @@ const user = [
 };
 
 
- const getUser = async (req, res) => {
+ const getUser =  async(req, res) => {
   const { id } = req.params;
 
-  const newuser = user.filter((item) => item.id == id);
+  const newuser =await getServices(id)
   res.json({ user: newuser });
 };
 
