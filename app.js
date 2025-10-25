@@ -1,7 +1,8 @@
 
 const express = require("express");
 const app = express();
-const userRouter=require("./routes/user")
+const userRouter=require("./routes/user");
+const productRouter = require("./routes/product");
 
 app.listen(8888, () => {
     console.log("server started and listening on port 8888")
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 })
 
 app.use("/", userRouter);
+app.use("/",productRouter)
 
 app.use("/custom-middleware", (req, res, next) => {
     console.log("custom-middleware")
