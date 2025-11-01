@@ -1,25 +1,11 @@
+const busesController = require("../controllers/busesController");
 const DBconnection = require("../DBconfig/connectDB");
 const express = require("express");
 const busRouter = express.Router();
 
-busRouter.get("/buses", async (req, res) => {
-  const query = `
-    CREATE TABLE IF NOT EXISTS Buses (
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      busNumber VARCHAR(20),
-      totalSeats INT,
-      availableSeats INT
-    )
-  `;
-
-  DBconnection.query(query, (err) => {
-    if (err) {
-      console.log("Error creating Buses table:", err);
-      return res.status(500).send("Error creating Buses table");
-    }
-    console.log(" Buses table created or already exists");
-    res.send(" Buses table created or already exists");
-  });
-});
+busRouter.get("/buses", busesController);
 
 module.exports = busRouter;
+
+
+

@@ -1,28 +1,26 @@
 
+const {
+  userController,
+  insertUser,
+  updateUser,
+  getUser,
+  deletUser,
+} = require("../controllers/userController");
 const DBconnection = require("../DBconfig/connectDB")
 const express = require("express");
 const userRouter = express.Router();
 
 
 
-userRouter.get("/user", async(req, res) => {
-    
-    const userQuery = `create table BusUser(
-  id int primary key,
-  name varchar(50),
-  email varchar(50)
-)`;
+userRouter.post("/user", userController);
 
-    const createUserTable = DBconnection.query(userQuery, (err) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log("user atble created");
-    });
+userRouter.post("/user/add", insertUser);
 
-    
-})
+userRouter.patch("/user/update/:id", updateUser);
+
+userRouter.get("/user", getUser);
+
+userRouter.delete("/user/:id", deletUser);
 
 
 module.exports = userRouter;

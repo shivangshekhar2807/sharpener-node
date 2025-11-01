@@ -9,6 +9,8 @@ const bookingRouter = require("./DBtables/bookingTable");
 const paymentRouter = require("./DBtables/paymentTable");
 const app = express();
 
+app.use(express.json());
+
 
 DBconnection.connect((err) => {
   if (err) {
