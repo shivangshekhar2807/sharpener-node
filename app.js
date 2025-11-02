@@ -1,42 +1,40 @@
 
 const express = require("express");
 require("dotenv").config();
-const DBconnection = require("./DBconfig/connectDB");
+// const DBconnection = require("./DBconfig/connectDB");
+const sequelize = require("./DBconfig/connectDB"); // Sequelize connection
 const createUserTable = require("./DBtables/userTable");
 const userRouter = require("./DBtables/userTable");
 const busRouter = require("./DBtables/busesTable");
 const bookingRouter = require("./DBtables/bookingTable");
 const paymentRouter = require("./DBtables/paymentTable");
 const app = express();
+const studentModel=require("./models/student")
 
 app.use(express.json());
 
 
-DBconnection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err);
-    return;
-  }
-    console.log("✅ Connected to MySQL!");
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log(" Connected to MySQL via Sequelize!");
+
+    // Synchronize models with DB
+    await sequelize.sync({ alter: false });
+    console.log(" Models synchronized with the database");
+
+    // Start the server
     app.listen(4444, () => {
-      console.log("Server Started at port 4444");
+      console.log(" Server running on port 4444");
     });
+      
+  } catch (error) {
+    console.error(" Database connection failed:", error);
+  }
+})();
 
-    // const query = `create table test(
-    //  id int primary key,
-    //  name varchar(50)
-    // )`
 
-    // DBconnection.query(query, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     return;
-    //   }
-    //   console.log("table created");
-    // });
 
-  
-});
 
 
 app.use("/", userRouter);
