@@ -9,7 +9,8 @@ const busRouter = require("./DBtables/busesTable");
 const bookingRouter = require("./DBtables/bookingTable");
 const paymentRouter = require("./DBtables/paymentTable");
 const app = express();
-const studentModel=require("./models/student")
+const studentModel=require("./models/student");
+const studentRouter = require("./routes/studentRoute");
 
 app.use(express.json());
 
@@ -41,6 +42,7 @@ app.use("/", userRouter);
 app.use("/", busRouter);
 app.use("/", bookingRouter);
 app.use("/", paymentRouter);
+app.use("/",studentRouter)
 
 app.use("/", (req, res) => {
     res.send("SQL")
