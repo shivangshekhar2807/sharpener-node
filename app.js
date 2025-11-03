@@ -12,6 +12,8 @@ const app = express();
 // const studentModel=require("./models/student");
 const studentRouter = require("./routes/studentRoute");
 const studentIdCardRouter = require("./routes/studentWithIdCard");
+const courseRouter = require("./routes/courses");
+const studentCourseRouter = require("./routes/studentCourses");
 require("./models")
 
 app.use(express.json());
@@ -45,7 +47,9 @@ app.use("/", busRouter);
 app.use("/", bookingRouter);
 app.use("/", paymentRouter);
 app.use("/", studentRouter)
-app.use("/",studentIdCardRouter)
+app.use("/", studentIdCardRouter)
+app.use("/", courseRouter);
+app.use("/", studentCourseRouter);
 
 app.use("/", (req, res) => {
     res.send("SQL")
