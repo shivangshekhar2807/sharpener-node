@@ -9,8 +9,10 @@ const busRouter = require("./DBtables/busesTable");
 const bookingRouter = require("./DBtables/bookingTable");
 const paymentRouter = require("./DBtables/paymentTable");
 const app = express();
-const studentModel=require("./models/student");
+// const studentModel=require("./models/student");
 const studentRouter = require("./routes/studentRoute");
+const studentIdCardRouter = require("./routes/studentWithIdCard");
+require("./models")
 
 app.use(express.json());
 
@@ -21,7 +23,7 @@ app.use(express.json());
     console.log(" Connected to MySQL via Sequelize!");
 
     // Synchronize models with DB
-    await sequelize.sync({ alter: false });
+    await sequelize.sync({ force: true });
     console.log(" Models synchronized with the database");
 
     // Start the server
@@ -42,7 +44,8 @@ app.use("/", userRouter);
 app.use("/", busRouter);
 app.use("/", bookingRouter);
 app.use("/", paymentRouter);
-app.use("/",studentRouter)
+app.use("/", studentRouter)
+app.use("/",studentIdCardRouter)
 
 app.use("/", (req, res) => {
     res.send("SQL")
